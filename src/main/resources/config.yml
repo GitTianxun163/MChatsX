@@ -1,0 +1,10 @@
+plugin_version: "1.1"
+
+# 称号前缀/后缀
+title_prefix: "\u00a7r\u00a77["
+title_suffix: "\u00a7r\u00a77] "
+
+# 聊天格式
+# - username: 用户名
+# - msg: 消息
+chat_format: "\u00a7r\u00a7f{username}\u00a7r\u00a77: \u00a7f{msg}"

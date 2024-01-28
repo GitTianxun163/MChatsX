@@ -1,0 +1,14 @@
+name: MChatsX
+version: '1.1.1'
+main: cc.tianxun.mchatsx.Main
+api-version: '1.20'
+
+commands:
+  setmyprefix:
+    description: 设置自己的称号
+    permission: permissions.default
+    usage: "Usage: /<command> <prefix> [...(colors)]"
+  setprefix:
+    description: 设置称号
+    permission: permissions.administrator
+    usage: "Usage: /<command> <username> <prefix> [...(colors)]"
