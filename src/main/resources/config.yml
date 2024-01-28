@@ -8,3 +8,7 @@ title_suffix: "\u00a7r\u00a77] "
 # - username: 用户名
 # - msg: 消息
 chat_format: "\u00a7r\u00a7f{username}\u00a7r\u00a77: \u00a7f{msg}"
+
+shield_words:
+  - 腐竹
+  - 服主

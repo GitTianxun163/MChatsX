@@ -1,8 +1,6 @@
 package cc.tianxun.mchatsx.Commands;
 import cc.tianxun.mchatsx.Globals;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
@@ -46,15 +44,15 @@ public class Prefixs implements CommandExecutor, TabExecutor {
                 commandSender.sendMessage("Didn't find the player");
                 return true;
             }
-            StringBuilder newtitle = new StringBuilder();
+            StringBuilder new_title = new StringBuilder();
             for (int i = 2; i < args.length; i++) {
                 if (colors.get(args[i]) == null) {
-                    commandSender.sendMessage(new String[] { "§l§4错误的颜色: §", args[i] });
+                    commandSender.sendMessage("§l§4错误的颜色: §n", args[i]);
                 }
-                newtitle.append(colors.get(args[i]));
+                new_title.append(colors.get(args[i]));
             }
-            newtitle.append(args[1]);
-            config.set(args[0], newtitle.toString());
+            new_title.append(args[1]);
+            config.set(args[0], new_title.toString());
         }
 
         if (label.equals("setmyprefix")) {
@@ -63,17 +61,26 @@ public class Prefixs implements CommandExecutor, TabExecutor {
             }
             if (commandSender instanceof Player) {
                 Player player = (Player)commandSender;
-                StringBuilder newtitle = new StringBuilder();
+                StringBuilder new_title = new StringBuilder();
+
+                // 屏蔽词
+                if (!player.isOp()) for (String word : config.getStringList("shield_words")) {
+                    if (args[0].matches(String.format("*%s*",word))) {
+                        player.sendMessage("§l§4涉嫌屏蔽词");
+                        return true;
+                    }
+                }
+
                 for (int i = 1; i < args.length; i++) {
                     if (colors.get(args[i]) == null) {
-                        player.sendMessage(new String[] { "§l§4错误的颜色: §", args[i] });
+                        player.sendMessage("§l§4错误的颜色: §n", args[i]);
                     }
-                    newtitle.append(colors.get(args[i]));
+                    new_title.append(colors.get(args[i]));
                 }
-                newtitle.append(args[0]);
-                config.set(player.getName(), newtitle.toString());
-            } else {
-
+                new_title.append(args[0]);
+                config.set(player.getName(), new_title.toString());
+            }
+            else {
                 commandSender.sendMessage("You can't use the command.");
             }
         }
@@ -82,8 +89,8 @@ public class Prefixs implements CommandExecutor, TabExecutor {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> tabs = new ArrayList<>();
         if (label.equals("setprefix")) {
-            switch (args.length) { case 0:
-                break;
+            switch (args.length) {
+				case 0: break;
                 case 1:
                     if (Bukkit.isWhitelistEnforced()) {
                         for (OfflinePlayer player : Bukkit.getWhitelistedPlayers()) {
@@ -94,14 +101,11 @@ public class Prefixs implements CommandExecutor, TabExecutor {
                     for (OfflinePlayer player : Bukkit.getWhitelistedPlayers()) {
                         tabs.add(player.getName());
                     }
-                    break;
+				break;
 
-                case 2:
-                    tabs.add(Globals.getDataConfig().getString(sender.getName()));
-                    break;
-                default:
-                    tabs.addAll(colors.keySet());
-                    break; }
+                case 2: tabs.add(Globals.getDataConfig().getString(sender.getName()));break;
+                default: tabs.addAll(colors.keySet());break;
+			}
 
         }
         if (label.equals("setmyprefix")) {

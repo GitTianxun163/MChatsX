@@ -3,7 +3,8 @@ import cc.tianxun.mchatsx.Commands.Prefixs;
 import cc.tianxun.mchatsx.Listeners.Chats;
 import cc.tianxun.mchatsx.Listeners.PlayerListeners;
 import java.io.IOException;
-import org.bukkit.plugin.Plugin;
+import java.util.Objects;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
@@ -12,12 +13,12 @@ public final class Main extends JavaPlugin {
         saveResource("prefixs.yml", false);
 
         Prefixs cmd_prefixs = new Prefixs();
-        getCommand("setprefix").setExecutor(cmd_prefixs);
-        getCommand("setprefix").setTabCompleter(cmd_prefixs);
-        getCommand("setmyprefix").setExecutor(cmd_prefixs);
-        getCommand("setmyprefix").setTabCompleter(cmd_prefixs);
-        getServer().getPluginManager().registerEvents(new Chats(), (Plugin)this);
-        getServer().getPluginManager().registerEvents(new PlayerListeners(), (Plugin)this);
+        Objects.requireNonNull(getCommand("setprefix")).setExecutor(cmd_prefixs);
+        Objects.requireNonNull(getCommand("setprefix")).setTabCompleter(cmd_prefixs);
+        Objects.requireNonNull(getCommand("setmyprefix")).setExecutor(cmd_prefixs);
+        Objects.requireNonNull(getCommand("setmyprefix")).setTabCompleter(cmd_prefixs);
+        getServer().getPluginManager().registerEvents(new Chats(), this);
+        getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
 
         System.out.println("Plugin enabled.");
     }

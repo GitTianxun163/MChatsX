@@ -17,6 +17,6 @@ public class Globals {
         return Main.getProvidingPlugin(Main.class).getConfig();
     }
     public static FileConfiguration getDataConfig() {
-/* 24 */     return dataconfig;
-/*    */   }
+        return dataconfig;
+    }
 }
